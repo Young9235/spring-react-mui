@@ -28,6 +28,7 @@
     "no-new": 0,
     "no-shadow": 0,
     "no-console": 0,
+    "no-alert": 0,
     "react/jsx-key": 1,
     "import/no-cycle": 0,
     "arrow-body-style": 1,
@@ -58,6 +59,7 @@
     "react/no-unstable-nested-components": 0,
     "react/function-component-definition": 0,
     "react/jsx-no-constructed-context-values": 0,
+    "react/self-closing-comp": 1,
     "no-unused-vars": [
       1,
       {

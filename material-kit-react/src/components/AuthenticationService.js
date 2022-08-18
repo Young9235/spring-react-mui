@@ -37,7 +37,7 @@ class AuthenticationService {
     // sessionStorage.setItem('authenticatedUser', username)
     //this.setupAxiosInterceptors(this.createJWTToken(token))
     this.setupAxiosInterceptors();
-    window.location.href = '/main';
+    window.location.href = '/dashboard/app';
   }
 
   getJWTToken() {
@@ -77,8 +77,8 @@ class AuthenticationService {
 
   isUserLoggedIn() {
     const token = localStorage.getItem('accessToken');
-    //console.log('===UserloggedInCheck===');
-    //console.log(token);
+    console.log('===UserloggedInCheck===');
+    console.log(token);
     if (token) {
       return true;
     } else {

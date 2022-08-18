@@ -4,9 +4,10 @@ import { Link as RouterLink } from 'react-router-dom';
 import { alpha } from '@mui/material/styles';
 import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton } from '@mui/material';
 // components
-import MenuPopover from '../../components/MenuPopover';
+import MenuPopover from 'src/components/MenuPopover';
 // mocks_
-import account from '../../_mock/account';
+import account from 'src/_mock/account';
+import AuthenticationService from 'src/components/AuthenticationService';
 
 // ----------------------------------------------------------------------
 
@@ -41,6 +42,10 @@ export default function AccountPopover() {
 
   const handleClose = () => {
     setOpen(null);
+  };
+
+  const handleLogout = () => {
+    AuthenticationService.logout();
   };
 
   return (
@@ -101,7 +106,7 @@ export default function AccountPopover() {
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
-        <MenuItem onClick={handleClose} sx={{ m: 1 }}>
+        <MenuItem onClick={handleLogout} sx={{ m: 1 }}>
           Logout
         </MenuItem>
       </MenuPopover>

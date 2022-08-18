@@ -60,9 +60,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 ## react-mui 참고
 
-- https://github.com/codedthemes/mantis-free-react-admin-template/
-- https://github.com/devias-io/material-kit-react
-- free version demo : https://mantisdashboard.io/free/dashboard/default
+- 템플릿 1 : https://github.com/codedthemes/mantis-free-react-admin-template/
+- 템플릿 2 : https://github.com/devias-io/material-kit-react
+- 템플릿 3 : https://github.com/minimal-ui-kit/material-kit-react
+- free version demo : https://minimal-kit-react.vercel.app/dashboard/app
+- mui 축약어 정보 : https://mui.com/system/properties/
 
 ## react ui 관련 라이브러리
 
