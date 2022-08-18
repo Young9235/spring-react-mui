@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.Server.dao.UserMapper">
+
+  	<select id="getUserList" resultType="com.example.Server.model.UserVo">
+  	SELECT A.*, group_concat(B.authName) as roles 
+  	  FROM tb_user_info A 
+	left outer join tb_userauth_info B 
+	on A.userId = B.userId
+	group by userId
+  	</select>
+	
+	<!-- 로그인시 필요 -->
+	<select id="findByUsername" resultType="com.example.Server.model.UserVo">
+  	SELECT A.*, group_concat(B.authName) as roles 
+  	  FROM tb_user_info A 
+	left outer join tb_userauth_info B 
+	on A.userId = B.userId
+	where username = #{username}
+	group by userId
+  	</select>	
+  	
+  	
+  	<!-- 유저정보 한건만 조회 -->
+  	<select id="getUserInfo" resultType="com.example.Server.model.UserVo">
+  	 	SELECT A.*, group_concat(B.authName) as roles 
+	  	  FROM tb_user_info A 
+		left outer join tb_userauth_info B 
+		on A.userId = B.userId
+		where A.userId = #{idx}
+		group by A.userId
+  	</select>	
+  	
+  	<select id="getUserRenew" resultType="com.example.Server.model.UserVo">
+  	 	SELECT A.*, group_concat(B.authName) as roles 
+	  	  FROM tb_user_info A 
+		left outer join tb_userauth_info B 
+		on A.userId = B.userId
+		where A.refreshToken = #{refreshToken}
+		group by A.userId
+  	</select>
+  	
+  	<!-- 리프레시 토큰 업데이트 -->
+  	<update id="updateRefreshToken" parameterType="Map">
+		UPDATE tb_user_info
+		   SET refreshToken = #{refreshToken}
+		 WHERE username = #{username}
+  	</update>
+  	
+  	<!-- 유저 등록  -->
+    <insert id="insertUser" parameterType="Map">		
+		INSERT INTO tb_user_info
+		(
+			username, 
+			password,  
+			nickname,  
+			snsLoginType,  
+			createDate 
+		)
+		VALUES
+		(
+			#{username},
+			#{password},
+			#{nickname},
+			#{snsLoginType},
+            date_format(now(),'%Y-%m-%d %H:%i:%s')
+		)
+    </insert>
+    
+     <insert id="insertAuth" parameterType="Map">		
+		INSERT INTO tb_userauth_info
+		(
+            authId,
+			userId,
+            authName
+		)
+		VALUES
+		(
+			#{authId},
+			#{userId},
+			#{authName}
+		)
+    </insert>
+  
+</mapper>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.example.Server.dao.SeqMapper">    
+               	
+    <select id="getSequenceInfo" parameterType="String" resultType="String">
+		<![CDATA[
+		SELECT concat(					
+                    prifixStr                    
+                    , 		
+                    case when connStr <> '' and prifixStr <> '' then
+						connStr
+		            else
+						''
+		            end   , 
+		            seqNum
+		        ) as seqNum
+		from 
+        (
+			select 
+				ifnull(prifixStr, '') as prifixStr,
+                ifnull(connStr, '') as connStr,    
+                subString(concat('0000000000000000', curNum), -curNumSize) as seqNum
+            from tb_sequence_info where seqId = #{seqId}
+        ) as tt
+		]]>
+	</select>
+	
+	<update id="updateSequenceInfo" parameterType="String">
+		update tb_sequence_info set
+			curNum = curNum +1
+		where seqId = #{seqId}
+	</update>
+	
+	
+	<select id="getYearWeekNumOfDay" parameterType="Map" resultType="Map">
+		<![CDATA[
+		select week_num, min(week_date) sdate, max(week_date) edate
+	    from 
+	    (
+			 select case 
+						when week(week_date) = 0 then 52
+	                    else week(week_date)
+					end week_num 
+				, week_date
+			 from (
+				select DATE_FORMAT(DATE_ADD(concat(#{year},'-01-01'), INTERVAL (conday) DAY), '%Y-%m-%d')as week_date
+				from 
+				(
+					select concat(a.a, b.a, c.a) conday
+					from 
+					(select 0 as a union all select 1 union all select 2 union all select 3 union all select 4 union all select 5 union all select 6 union all select 7 union all select 8 union all select 9 ) as a
+					cross join (select 0 as a union all select 1 union all select 2 union all select 3 union all select 4 union all select 5 union all select 6 union all select 7 union all select 8 union all select 9) as b
+					cross join (select 0 as a union all select 1 union all select 2 union all select 3 union all select 4 union all select 5 union all select 6 union all select 7 union all select 8 union all select 9) as c
+				) A
+				where conday <= '380' 
+			)A
+		) A
+	    where week_num = #{week_num}
+	    ]]>
+    	<if test="week_num == 52">
+			<![CDATA[and week_date > concat(#{year},'-06-01')   ]]>
+		</if>	
+	</select>
+	
+	<select id="getSysDateWeekNum" parameterType="Map" resultType="int">
+		<![CDATA[select week(sysdate(), 0) from dual]]>
+	</select>
+	       	
+</mapper>

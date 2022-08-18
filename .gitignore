@@ -1,0 +1,27 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+.metadata
+
+# dependencies
+material-kit-react/node_modules
+material-kit-react/.pnp
+.pnp.js
+
+# testing
+material-kit-react/coverage
+
+# production
+material-kit-react/build
+
+# misc
+.DS_Store
+material-kit-react/.env
+material-kit-react/.env.local
+material-kit-react/.env.development.local
+material-kit-react/.env.test.local
+material-kit-react/.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+.eslintcache
