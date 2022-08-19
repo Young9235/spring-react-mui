@@ -12,8 +12,8 @@ import useResponsive from 'src/hooks/useResponsive';
 import Logo from 'src/components/Logo';
 import Scrollbar from 'src/components/Scrollbar';
 import NavSection from 'src/components/NavSection';
-//
 import navConfig from './NavConfig';
+//
 
 // ----------------------------------------------------------------------
 

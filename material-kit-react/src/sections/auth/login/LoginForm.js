@@ -11,7 +11,6 @@ import { FormProvider, RHFCheckbox, RHFTextField } from 'src/components/hook-for
 import Iconify from 'src/components/Iconify';
 import Loader from 'src/components/Loader';
 import axios from 'axios';
-import { HTTP_URL } from 'src/common/constants';
 import AuthenticationService from 'src/components/AuthenticationService';
 
 // ----------------------------------------------------------------------
@@ -29,7 +28,7 @@ export default function LoginForm() {
   const defaultValues = {
     username: '',
     password: '',
-    remember: true,
+    remember: false,
   };
 
   const methods = useForm({
@@ -43,11 +42,11 @@ export default function LoginForm() {
   } = methods;
 
   const onSubmit = async (login) => {
-    console.log(login);
+    // console.log(login);
     setStstusError(false);
     setProgress(true);
     axios
-      .post(`${HTTP_URL}/api/authenticate`, login)
+      .post('/api/authenticate', login)
       .then((response) => {
         // 성공 핸들링
         console.log('====== login success =======');

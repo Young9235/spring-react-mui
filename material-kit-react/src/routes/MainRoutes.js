@@ -8,6 +8,7 @@ import { Navigate, useRoutes } from 'react-router-dom';
 // layouts
 import DashboardLayout from 'src/layouts/dashboard';
 import LogoOnlyLayout from 'src/layouts/LogoOnlyLayout';
+import GridPage from 'src/pages/GridPage';
 
 function MainRoutes() {
   const element = useRoutes([
@@ -20,6 +21,7 @@ function MainRoutes() {
         { path: 'user', element: <User /> },
         { path: 'products', element: <Products /> },
         { path: 'blog', element: <Blog /> },
+        { path: 'grid', element: <GridPage /> },
       ],
     },
     {

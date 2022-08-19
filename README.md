@@ -81,8 +81,20 @@ npm install @hookform/resolvers yup
 ```
 
 - react-hook-form
+
   - 특징 : formik의 특징 + re-randing 방지 + 성능적으로 우월(가볍다)
   - 참고 : https://react-hook-form.com/kr/get-started
+
+- 아이콘 관련 : iconify https://icon-sets.iconify.design/
+
+### grid 관련
+
+- AG Grid : https://www.ag-grid.com/react-data-grid/getting-started/
+
+```txt
+npm install --save ag-grid-community
+npm install --save ag-grid-react
+```
 
 ## ESLint 설정하기
 

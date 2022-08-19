@@ -3,8 +3,8 @@ import { faker } from '@faker-js/faker';
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
 // components
-import Page from '../components/Page';
-import Iconify from '../components/Iconify';
+import Page from 'src/components/Page';
+import Iconify from 'src/components/Iconify';
 // sections
 import {
   AppTasks,
@@ -16,12 +16,23 @@ import {
   AppWidgetSummary,
   AppCurrentSubject,
   AppConversionRates,
-} from '../sections/@dashboard/app';
+} from 'src/sections/@dashboard/app';
+import axios from 'axios';
+import AuthenticationService from 'src/components/AuthenticationService';
 
 // ----------------------------------------------------------------------
 
 export default function DashboardApp() {
   const theme = useTheme();
+
+  axios
+    .get('/home/userInfo', { data: {}, headers: AuthenticationService.getJWTToken() })
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      AuthenticationService.exceptionJwtLogin(error);
+    });
 
   return (
     <Page title="Dashboard">
@@ -36,11 +47,21 @@ export default function DashboardApp() {
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="New Users" total={1352831} color="info" icon={'ant-design:apple-filled'} />
+            <AppWidgetSummary
+              title="New Users"
+              total={1352831}
+              color="info"
+              icon={'ant-design:apple-filled'}
+            />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Item Orders" total={1723315} color="warning" icon={'ant-design:windows-filled'} />
+            <AppWidgetSummary
+              title="Item Orders"
+              total={1723315}
+              color="warning"
+              icon={'ant-design:windows-filled'}
+            />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
