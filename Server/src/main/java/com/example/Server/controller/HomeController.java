@@ -2,6 +2,7 @@ package com.example.Server.controller;
 
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Server.dto.TokenDto;
 import com.example.Server.jwt.JwtFilter;
+import com.example.Server.model.Book;
 import com.example.Server.model.UserVo;
+import com.example.Server.service.BookService;
 import com.example.Server.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -26,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class HomeController {
 	private final UserService userService;
+	private final BookService bookService;
 	
 	@GetMapping("/hello")
 	public ResponseEntity<String> getUserList() throws Exception {	

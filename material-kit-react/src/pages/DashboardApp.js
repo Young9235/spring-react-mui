@@ -17,30 +17,39 @@ import {
   AppCurrentSubject,
   AppConversionRates,
 } from 'src/sections/@dashboard/app';
-import axios from 'axios';
-import AuthenticationService from 'src/components/AuthenticationService';
+import instance from 'src/utils/axios-instance';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
 export default function DashboardApp() {
   const theme = useTheme();
+  const [data, setData] = useState('');
+  const navigate = useNavigate();
 
-  axios
-    .get('/home/userInfo', { data: {}, headers: AuthenticationService.getJWTToken() })
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      AuthenticationService.exceptionJwtLogin(error);
+  useEffect(() => {
+    instance.get('/home/userInfo').then((response) => {
+      console.log('==== userInfo ===== ', response);
+      setData(response.data);
     });
+    // .catch((error) => {
+    //   if(error.response.status === 402) {
+    //     navigate("/");
+    //   }
+    // });
+
+    instance.get('/book/list').then((response) => {
+      console.log('==== Book List ===== ', response);
+    });
+  }, []);
 
   return (
     <Page title="Dashboard">
       <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Hi, Welcome back
+          {data.nickname}
         </Typography>
-
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
             <AppWidgetSummary title="Weekly Sales" total={714000} icon={'ant-design:android-filled'} />

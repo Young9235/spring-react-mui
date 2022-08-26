@@ -19,6 +19,11 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [ststusError, setStstusError] = useState(false);
   const [progress, setProgress] = useState(false);
+  // const { token } = useSelector((state) => {
+  //   // console.log(state.counter1.value);
+  //   // console.log(state.token.accessToken);
+  //   return state.token;
+  // });
 
   const LoginSchema = Yup.object().shape({
     username: Yup.string().email('Email must be a valid email address').required('Email is required'),
@@ -50,7 +55,9 @@ export default function LoginForm() {
       .then((response) => {
         // 성공 핸들링
         console.log('====== login success =======');
-        console.log(response);
+        // console.log(response);
+        // dispatch(setAccessToken(response.data.accessToken));
+        // dispatch(setRefreshToken(response.data.refreshToken));
         AuthenticationService.registerSuccessfulLoginForJwt(
           response.data.accessToken,
           response.data.refreshToken,
@@ -69,6 +76,10 @@ export default function LoginForm() {
         setProgress(false);
       });
   };
+
+  // useEffect(() => {
+  //   console.log(token);
+  // }, [token]);
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
