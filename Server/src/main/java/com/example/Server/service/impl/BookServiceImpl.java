@@ -19,6 +19,11 @@ public class BookServiceImpl implements BookService {
 	
 	private final BookMapper bookMapper;
 	
+	@Transactional(readOnly = true)	
+	public int getBookListCnt(HashMap<String, Object> map) throws Exception {
+		return bookMapper.getBookListCnt(map);
+	}
+	
 	@Transactional(readOnly = true)		
 	public List<Book> getBookList(HashMap<String, Object> map) throws Exception {
 		return bookMapper.getBookList(map);

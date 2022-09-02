@@ -5,8 +5,13 @@
 
 <mapper namespace="com.example.Server.dao.BookMapper">
 
+	<select id="getBookListCnt" resultType="Integer">
+		SELECT COUNT(*) FROM tb_book_info
+	</select>
+	
   	<select id="getBookList" resultType="com.example.Server.model.Book">
   		SELECT * FROM tb_book_info
+  		limit #{schPage}, #{schRowsPerPage}
   	</select>
   
 	<insert id="insertBook" parameterType="Map">

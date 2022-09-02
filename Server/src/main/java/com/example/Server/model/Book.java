@@ -11,15 +11,26 @@ import lombok.NoArgsConstructor;
 @Data		// getter, setter 만들어줌
 public class Book {
 //	idx int AI PK 
+//	productCode varchar(45) 
 //	title varchar(45) 
-//	description varchar(45) 
-//	price varchar(45)
+//	author varchar(20) 
+//	publicDate varchar(45) 
+//	description varchar(300) 
+//	inStockYn varchar(45) 
+//	inStockCnt varchar(45) 
+//	category varchar(45) 
+//	price varchar(10) 
+//	salePrice varchar(45)
 	
     private Long idx;
 	
     private String title;
     
+    private String author;
+    
     private String description;
+    
+    private String category;
     
     private String price;
 

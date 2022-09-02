@@ -19,6 +19,8 @@ public interface UserMapper {
 	
 	int insertAuth(HashMap<String, Object> map) throws Exception;
 	
+	int getUserListCnt(HashMap<String, Object> map) throws Exception;
+	
 	UserVo getUserInfo(HashMap<String, Object> map) throws Exception;
 	
 	UserVo findByUsername(String username);

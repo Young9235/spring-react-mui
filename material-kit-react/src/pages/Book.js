@@ -20,7 +20,6 @@ import {
 } from '@mui/material';
 // components
 import Page from 'src/components/Page';
-import Label from 'src/components/Label';
 import Scrollbar from 'src/components/Scrollbar';
 import Iconify from 'src/components/Iconify';
 import SearchNotFound from 'src/components/SearchNotFound';
@@ -32,11 +31,10 @@ import Loader from 'src/components/Loader';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'username', label: 'User ID', alignRight: false },
-  { id: 'nickname', label: '이름', alignRight: false },
-  { id: 'company', label: '그룹(소속)', alignRight: false },
-  { id: 'role', label: 'Role', alignRight: false },
-  { id: 'status', label: '접속여부', alignRight: false },
+  { id: 'title', label: '책 이름', alignRight: false },
+  { id: 'author', label: '저자', alignRight: false },
+  { id: 'category', label: '카테고리', alignRight: false },
+  { id: 'price', label: '가격', alignRight: false },
   { id: 'edit', label: '', alignRight: false },
 ];
 
@@ -71,7 +69,7 @@ function applySortFilter(array, comparator, query) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function User() {
+export default function Book() {
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState('asc');
   const [selected, setSelected] = useState([]);
@@ -87,7 +85,7 @@ export default function User() {
   }, [page, rowsPerPage]);
 
   useEffect(() => {
-    instance.get('/user/listLength').then((response) => {
+    instance.get('/book/listLength').then((response) => {
       // console.log('==== User Length ===== ', response.data);
       setDataLength(response.data);
     });
@@ -95,8 +93,8 @@ export default function User() {
 
   useEffect(() => {
     setProgress(true);
-    instance.get('/user/list', { params: searchParams }).then((response) => {
-      console.log('==== User List ===== ', response);
+    instance.get('/book/list', { params: searchParams }).then((response) => {
+      console.log('==== Book List ===== ', response);
       setUserList(response.data);
       setProgress(false);
     });
@@ -159,15 +157,15 @@ export default function User() {
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            User
+            도서 정보 관리
           </Typography>
           <Button
             variant="contained"
             component={RouterLink}
-            to="#"
+            to="/dashboard/book/new"
             startIcon={<Iconify icon="eva:plus-fill" />}
           >
-            New User
+            도서 등록
           </Button>
         </Stack>
 
@@ -193,13 +191,13 @@ export default function User() {
                 />
                 <TableBody>
                   {filteredUsers.map((row) => {
-                    const { userId, username, nickname, roles, status, company } = row;
-                    const isItemSelected = selected.indexOf(username) !== -1;
+                    const { bookId, title, author, category, price } = row;
+                    const isItemSelected = selected.indexOf(title) !== -1;
 
                     return (
                       <TableRow
                         hover
-                        key={userId}
+                        key={bookId}
                         tabIndex={-1}
                         role="checkbox"
                         selected={isItemSelected}
@@ -208,28 +206,21 @@ export default function User() {
                         <TableCell padding="checkbox">
                           <Checkbox
                             checked={isItemSelected}
-                            onChange={(event) => handleClick(event, username)}
+                            onChange={(event) => handleClick(event, title)}
                           />
                         </TableCell>
                         <TableCell component="th" scope="row" padding="none">
                           <Stack direction="row" alignItems="center" spacing={2}>
                             {/* <Avatar alt={username} src={avatarUrl} /> */}
-                            <Avatar alt={username} src={`/static/mock-images/avatars/avatar_${userId}.jpg`} />
+                            <Avatar alt={title} src={`/static/mock-images/avatars/avatar_${bookId}.jpg`} />
                             <Typography variant="subtitle2" noWrap>
-                              {username}
+                              {title}
                             </Typography>
                           </Stack>
                         </TableCell>
-                        <TableCell align="left">{nickname}</TableCell>
-                        <TableCell align="left">{company}</TableCell>
-                        <TableCell align="left">{roles}</TableCell>
-                        {/* <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell> */}
-                        <TableCell align="left">
-                          <Label variant="ghost" color={(status === 'disconnect' && 'error') || 'success'}>
-                            {sentenceCase(status)}
-                          </Label>
-                        </TableCell>
-
+                        <TableCell align="left">{author}</TableCell>
+                        <TableCell align="left">{category}</TableCell>
+                        <TableCell align="left">{price}</TableCell>
                         <TableCell align="right">
                           <UserMoreMenu />
                         </TableCell>

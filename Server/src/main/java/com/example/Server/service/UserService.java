@@ -24,4 +24,6 @@ public interface UserService {
 	public UserVo findByUsername(String username);
 
 	public int updateRefreshToken(HashMap<String, Object> map) throws Exception;
+	
+	public int getUserListCnt(HashMap<String, Object> map) throws Exception;
 }

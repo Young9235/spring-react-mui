@@ -55,7 +55,7 @@ public class JwtFilter extends OncePerRequestFilter {
 	           SecurityContextHolder.getContext().setAuthentication(authentication);	// 토큰을 Security Context Set해준다.
 	           logger.debug("Security Context에 '{}' 인증 정보를 저장했습니다, uri: {}", authentication.getName(), requestURI);
 		   } else if(tokenProvider.validateToken(jwt).equals("forbidden")) {
-			   httpServletRequest.setAttribute("exception", HttpServletResponse.SC_PAYMENT_REQUIRED);	// 만료된 토큰 -> refreshToken 발급 402
+			   httpServletRequest.setAttribute("exception", 308);	// 만료된 토큰 308 -> refreshToken 발급 
 		   }
 	   } else {
 		   httpServletRequest.setAttribute("exception", HttpServletResponse.SC_UNAUTHORIZED);		// 사용할 수 없는 토큰 강제 로그아웃 401

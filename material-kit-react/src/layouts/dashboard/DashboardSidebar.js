@@ -80,6 +80,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         </Link>
       </Box>
 
+      {/* 메뉴바 */}
       <NavSection navConfig={navConfig} />
 
       <Box sx={{ flexGrow: 1 }} />

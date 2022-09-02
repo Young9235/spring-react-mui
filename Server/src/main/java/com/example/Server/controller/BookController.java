@@ -1,7 +1,12 @@
 package com.example.Server.controller;
 
 import java.util.HashMap;
+import java.util.List;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.Server.jwt.TokenProvider;
 import com.example.Server.model.Book;
+import com.example.Server.model.SearchParams;
+import com.example.Server.model.UserVo;
 import com.example.Server.service.BookService;
 
 import lombok.RequiredArgsConstructor;
@@ -24,14 +32,38 @@ import lombok.RequiredArgsConstructor;
 public class BookController {
 	
 	private final BookService bookService;
+	private final Logger logger = LoggerFactory.getLogger(TokenProvider.class);
 	
 	// security 라이브러리(CORS정책) => 필터를 만들어야함 => 시큐리티가 CORS를 해제해줘야함
-	
+	// 모두 가져오기
+	@GetMapping("/listLength")	
+	public ResponseEntity<Integer> getBookListCnt() throws Exception {	//ResponseEntity : http status 코드도 같이 리턴 할 수 있다.
+		HashMap<String, Object> map = new HashMap<>();
+		int totalCount = bookService.getBookListCnt(map);
+		return new ResponseEntity<>(totalCount, HttpStatus.OK);	// Book데이터와 HttpStatus상태 코드도 같이 리턴한다.
+	}
+		
 	// 모두 가져오기
 	@GetMapping("/list")	
-	public ResponseEntity<?> getBookList() throws Exception {	//ResponseEntity : http status 코드도 같이 리턴 할 수 있다.
+	public ResponseEntity<JSONArray> getBookList(SearchParams search) throws Exception {	//ResponseEntity : http status 코드도 같이 리턴 할 수 있다.
 		HashMap<String, Object> map = new HashMap<>();
-		return new ResponseEntity<>(bookService.getBookList(map), HttpStatus.OK);	// Book데이터와 HttpStatus상태 코드도 같이 리턴한다.
+		JSONArray dataList = new JSONArray();
+		logger.info("search Param =====> page : " + search.getSchPage() + ", rowsPerPage : " + search.getSchRowsPerPage());
+		map.put("schPage", search.getSchPage());
+		map.put("schRowsPerPage", search.getSchRowsPerPage());
+		
+		List<Book> bookList = bookService.getBookList(map);
+		
+		for(Book book : bookList) {			
+			JSONObject obj = new JSONObject();
+			obj.put("bookId", book.getIdx());
+			obj.put("title", book.getTitle());
+			obj.put("author", book.getAuthor());
+			obj.put("category", book.getCategory());
+			dataList.add(obj);
+		}
+		
+		return new ResponseEntity<>(dataList, HttpStatus.OK);	// Book데이터와 HttpStatus상태 코드도 같이 리턴한다.
 	}
 	
 	// 저장하기

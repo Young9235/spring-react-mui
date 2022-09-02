@@ -16,4 +16,6 @@ public interface BookService {
 	public int deleteBook(HashMap<String, Object> map) throws Exception;
 	
 	public Book getBookInfo(HashMap<String, Object> map) throws Exception;
+
+	public int getBookListCnt(HashMap<String, Object> map) throws Exception;
 }

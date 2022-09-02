@@ -19,33 +19,27 @@ import {
 } from 'src/sections/@dashboard/app';
 import instance from 'src/utils/axios-instance';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import Loader from 'src/components/Loader';
 
 // ----------------------------------------------------------------------
 
 export default function DashboardApp() {
   const theme = useTheme();
   const [data, setData] = useState('');
-  const navigate = useNavigate();
+  const [progress, setProgress] = useState(false);
 
   useEffect(() => {
+    setProgress(true);
     instance.get('/home/userInfo').then((response) => {
-      console.log('==== userInfo ===== ', response);
+      console.log('==== test 통신 ===== ', response);
       setData(response.data);
-    });
-    // .catch((error) => {
-    //   if(error.response.status === 402) {
-    //     navigate("/");
-    //   }
-    // });
-
-    instance.get('/book/list').then((response) => {
-      console.log('==== Book List ===== ', response);
+      setProgress(false);
     });
   }, []);
 
   return (
     <Page title="Dashboard">
+      {progress && <Loader />}
       <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }}>
           {data.nickname}

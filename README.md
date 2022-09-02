@@ -96,6 +96,12 @@ npm install --save ag-grid-community
 npm install --save ag-grid-react
 ```
 
+### Mulite File upload Drag And Drop 관련
+
+```txt
+npm install react-dropzone-uploader
+```
+
 ## ESLint 설정하기
 
 - 코드 일관성 및 팀플 시 규칙을 준수하기 위함, 올바른 ES6문법 체크, 문법체크 설정을 on,off 할 수 있다.

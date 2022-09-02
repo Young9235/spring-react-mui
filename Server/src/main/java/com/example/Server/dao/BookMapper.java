@@ -18,4 +18,6 @@ public interface BookMapper {
 	int insertBook(HashMap<String, Object> map) throws Exception;
 	
 	Book getBookInfo(HashMap<String, Object> map) throws Exception;
+
+	int getBookListCnt(HashMap<String, Object> map) throws Exception;
 }

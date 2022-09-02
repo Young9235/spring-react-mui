@@ -17,6 +17,11 @@ const navConfig = [
     icon: getIcon('eva:people-fill'),
   },
   {
+    title: 'book',
+    path: '/dashboard/book',
+    icon: getIcon('mdi:book-open-variant'),
+  },
+  {
     title: 'grid',
     path: '/dashboard/grid',
     icon: getIcon('mdi:list-status'),
@@ -31,6 +36,7 @@ const navConfig = [
     path: '/dashboard/blog',
     icon: getIcon('eva:file-text-fill'),
   },
+
   // {
   //   title: 'login',
   //   path: '/login',

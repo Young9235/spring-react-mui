@@ -9,6 +9,8 @@ import { Navigate, useRoutes } from 'react-router-dom';
 import DashboardLayout from 'src/layouts/dashboard';
 import LogoOnlyLayout from 'src/layouts/LogoOnlyLayout';
 import GridPage from 'src/pages/GridPage';
+import Book from 'src/pages/Book';
+import NewBook from 'src/pages/book/NewBook';
 
 function MainRoutes() {
   const element = useRoutes([
@@ -19,6 +21,13 @@ function MainRoutes() {
         { index: true, element: <Navigate to="/dashboard/app" /> },
         { path: 'app', element: <DashboardApp /> },
         { path: 'user', element: <User /> },
+        {
+          path: 'book',
+          children: [
+            { index: true, element: <Book /> },
+            { path: 'new', element: <NewBook /> },
+          ],
+        },
         { path: 'products', element: <Products /> },
         { path: 'blog', element: <Blog /> },
         { path: 'grid', element: <GridPage /> },

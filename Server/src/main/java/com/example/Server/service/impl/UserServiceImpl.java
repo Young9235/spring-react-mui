@@ -25,7 +25,6 @@ public class UserServiceImpl implements UserService {
 	
 	private final UserMapper userMapper;
 	private final SeqMapper seqMapper;
-	private final Logger logger = LoggerFactory.getLogger(TokenProvider.class);
 	
 	final String authStr = "AUTH_ID";
 	
@@ -125,6 +124,11 @@ public class UserServiceImpl implements UserService {
 	@Transactional(readOnly = true)
 	public UserVo getUserRenew(String refreshToken) {
 		return userMapper.getUserRenew(refreshToken);
+	}
+
+	@Transactional(readOnly = true)
+	public int getUserListCnt(HashMap<String, Object> map) throws Exception {
+		return userMapper.getUserListCnt(map);
 	}
 	
 }

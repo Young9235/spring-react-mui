@@ -77,7 +77,7 @@ public class AuthController {
         return new ResponseEntity<>(new TokenDto(access_token, refresh_token), httpHeaders, HttpStatus.OK);
     }
     
-    @GetMapping("/refreshToken")
+    @PostMapping("/refreshToken")
     public ResponseEntity<TokenDto> refreshToken(HttpServletRequest request) throws Exception {
         
     	String refreshToken = request.getHeader(JwtFilter.REFRESH_TOKEN_HEADER);

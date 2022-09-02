@@ -15,8 +15,8 @@ export default function SearchNotFound({ searchQuery = '', ...other }) {
         Not found
       </Typography>
       <Typography variant="body2" align="center">
-        No results found for &nbsp;
-        <strong>&quot;{searchQuery}&quot;</strong>. Try checking for typos or using complete words.
+        입력된 값을 확인해주세요. &nbsp;
+        <strong>&quot;{searchQuery}&quot;</strong>. 해당 데이터 결과가 없습니다.
       </Typography>
     </Paper>
   );

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.json.simple.JSONArray;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +21,11 @@ public class UserVo {
     private String password;
     private String snsLoginType;
     private String roles;
+    private String updateDate;
+    private String refreshToken;
+    private String status;
+    private String company;
+   
     
     // ENUM으로 안하고 ,로 해서 구분해서 ROLE을 입력 -> 그걸 파싱!!
     public List<String> getRoleList(){
