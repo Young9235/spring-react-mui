@@ -14,3 +14,16 @@
 .locked-col {
   background: #ddd;
 }
+
+.dzu-inputLabelWithFiles {
+  margin-bottom: 20px;
+}
+
+.dzu-previewContainer {
+  min-height: 120px;
+}
+
+.dzu-previewImage {
+  max-height: 100px;
+  max-width: 200px;
+}

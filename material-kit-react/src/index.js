@@ -4,11 +4,12 @@ import 'simplebar/src/simplebar.css';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import style from 'src/css/styles.css';
 import App from 'src/App';
 import { Provider } from 'react-redux';
 import store from 'src/redux-toolkit/store';
 
+import 'react-dropzone-uploader/dist/styles.css';
+import style from 'src/css/styles.css';
 // ----------------------------------------------------------------------
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
