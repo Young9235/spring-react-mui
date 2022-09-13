@@ -31,12 +31,13 @@ import Card from '@mui/material/Card';
 import { top100Films } from 'src/common/constants';
 import MyUploader from 'src/components/file-upload/MyUploader';
 import Dropzone from 'react-dropzone-uploader';
-import { FormProvider, RHFOutlineInputField, RHFTextField } from 'src/components/hook-form';
+import { FormProvider, RHFTextField } from 'src/components/hook-form';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
 import RHFSwitch from 'src/components/hook-form/RHFSwitch';
+import RHFSelect from 'src/components/hook-form/RHFSelect';
 
 const Item = styled(Card)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -49,26 +50,13 @@ const Item = styled(Card)(({ theme }) => ({
 export default function NewBook() {
   const [ststusError, setStstusError] = useState(false);
   const [progress, setProgress] = useState(false);
-  const [age, setAge] = useState('');
   const [price, setPrice] = useState('');
   const [inStockYn, setInStockYn] = useState(false);
-
-  const selHandleChange = (event) => {
-    setAge(event.target.value);
-  };
-  const priceHandleChange = (event) => {
-    let value = event.target.value; // 입력값을 value 라고 선언
-    const numCheck = /^[0-9,]/.test(value); // 입력값이 숫자와 콤마(,)인지 확인 (불린값이 나옴)
-
-    if (!numCheck && value) return; // 숫자가 아닌 문자로 이루어져 있으면 pass! (입력이 x)
-
-    if (numCheck) {
-      // 숫자이면
-      const numValue = value.replaceAll(',', ''); // 잠시 콤마를 때주고
-      value = numValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); // 받은 값에 3자리수마다 콤마를 추가
-    }
-    setPrice(value);
-  };
+  const selectBoxData = [
+    { id: 'CD-0000', value: 'CHO', label: '소설/문학' },
+    { id: 'CD-0001', value: 'STR', label: '잡지/시사/이슈' },
+    { id: 'CD-0002', value: 'VAN', label: '어린이/아동' },
+  ];
 
   // yup 벨리데이션 처리
   const schema = Yup.object().shape({
@@ -79,6 +67,7 @@ export default function NewBook() {
       is: true,
       then: Yup.number().typeError('재고 수는 필수 값입니다.').min(1, '1 이상 입력해주세요.'),
     }),
+    category: Yup.string().required('카테고리는 필수 값입니다.'),
   });
 
   const fileData = [];
@@ -93,13 +82,13 @@ export default function NewBook() {
   const defaultValues = {
     bookNm: '',
     authNm: '',
-    description: '내용을 입력해주세요',
+    description: '',
     productCode: '',
     publicDate: dayjs().format('YYYY-MM-DD'),
     inStockYn: true,
     inStockCnt: 0,
     price: '',
-    salePrice: '',
+    category: '',
   };
 
   const methods = useForm({
@@ -112,7 +101,7 @@ export default function NewBook() {
     watch,
     setValue,
     control,
-    formState: { isSubmitting },
+    formState: { errors },
   } = methods;
 
   const onSubmit = async (data) => {
@@ -122,7 +111,7 @@ export default function NewBook() {
   // 재고 유무 스위치
   const inStockSwitch = watch('inStockYn');
   useEffect(() => {
-    console.log('inStockYn', inStockSwitch);
+    // console.log('inStockYn', inStockSwitch);
     if (inStockSwitch) {
       setInStockYn(true);
     } else {
@@ -136,6 +125,26 @@ export default function NewBook() {
       label: inStockYn ? '재고 있음' : '재고 없음',
     };
   }, [inStockYn]);
+
+  const priceVal = watch('price');
+  useEffect(() => {
+    let value = priceVal; // 입력값을 value 라고 선언
+    const numCheck = /^[0-9,]/.test(value); // 입력값이 숫자와 콤마(,)인지 확인 (불린값이 나옴)
+    if (numCheck) {
+      // 숫자이면
+      const numValue = value.replaceAll(',', ''); // 잠시 콤마를 때주고
+      value = numValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); // 받은 값에 3자리수마다 콤마를 추가
+      setValue('price', value);
+    } else {
+      setValue('price', '');
+    }
+  }, [priceVal, setValue]);
+
+  const date = watch('publicDate');
+  useEffect(() => {
+    const value = dayjs(date).format('YYYY-MM-DD');
+    console.log(value);
+  }, [date]);
 
   return (
     <Page title="User">
@@ -168,8 +177,9 @@ export default function NewBook() {
                         label="출간 날짜"
                         inputFormat="YYYY-MM-DD"
                         mask={'____-__-__'}
-                        type="datetime-local"
+                        // type="datetime-local"
                         renderInput={(params) => (
+                          // dayjs(params).format('YYYY-MM-DD')
                           <TextField {...params} sx={{ mb: 2, width: '48%', mr: '2%' }} />
                         )}
                       />
@@ -196,27 +206,32 @@ export default function NewBook() {
                 />
                 <FormControl fullWidth sx={{ mb: 2 }}>
                   <InputLabel id="demo-simple-select-label">Category</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={age}
+                  <RHFSelect
+                    name="category"
                     label="Category"
-                    onChange={selHandleChange}
+                    options={selectBoxData}
                     style={{ textAlign: 'left' }}
-                  >
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
-                  </Select>
+                    errors={errors.category?.message}
+                  />
                 </FormControl>
-                <Autocomplete
-                  multiple
-                  limitTags={2}
-                  id="multiple-limit-tags"
-                  options={top100Films}
-                  getOptionLabel={(option) => option.title}
+                <Controller
+                  name="tags"
+                  control={control}
                   defaultValue={[top100Films[13], top100Films[12], top100Films[11]]}
-                  renderInput={(params) => <TextField {...params} label="Tags" />}
+                  render={({ field: { ref, onChange, ...field } }) => (
+                    <Autocomplete
+                      // limitTags={2}
+                      multiple
+                      id="multiple-limit-tags"
+                      options={top100Films}
+                      onChange={(_, data) => onChange(data)}
+                      getOptionLabel={(option) => option.title}
+                      defaultValue={[top100Films[13], top100Films[12], top100Films[11]]}
+                      renderInput={(params) => (
+                        <TextField {...params} {...field} inputRef={ref} label="Tags" />
+                      )}
+                    />
+                  )}
                 />
                 <FormGroup>
                   <RHFSwitch name="inStockYn" label={inStockLabel.label} sx={{ mb: 1, mt: 1 }} />
@@ -225,6 +240,7 @@ export default function NewBook() {
                       label="재고 수"
                       type="number"
                       name="inStockCnt"
+                      // outline fild
                       InputLabelProps={{
                         shrink: true,
                       }}
@@ -234,7 +250,7 @@ export default function NewBook() {
                 </FormGroup>
               </Item>
               <Item sx={{ mt: 2 }}>
-                <FormControl fullWidth sx={{ mb: 2 }}>
+                <FormControl fullWidth>
                   <RHFTextField
                     label="Price"
                     name="price"
@@ -244,14 +260,6 @@ export default function NewBook() {
                     InputProps={{
                       startAdornment: <InputAdornment position="start">￦</InputAdornment>,
                     }}
-                  />
-                </FormControl>
-                <FormControl fullWidth>
-                  <InputLabel htmlFor="outlined-adornment-sale">Sale Price</InputLabel>
-                  <OutlinedInput
-                    id="outlined-adornment-sale"
-                    startAdornment={<InputAdornment position="start">￦</InputAdornment>}
-                    label="Sale Price"
                   />
                 </FormControl>
               </Item>

@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const CATE_READ = 'CATE_READ';
 export const CATE_INSERT = 'CATE_INSERT';
 export const CATE_UPDATE = 'CATE_UPDATE';
@@ -37,6 +39,14 @@ export const COUNTRY_CODES = {
   Japan: 'jp',
   Croatia: 'hr',
   Ukraine: 'ua',
+};
+
+// 추후 코드 값으로 등록하여 조회 => 현재 하드 코딩
+export const fnTop100Films = (param) => {
+  // const rtnData = [];
+  axios.get('/home/hello').then((response) => {
+    console.log(response);
+  });
 };
 
 // Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
