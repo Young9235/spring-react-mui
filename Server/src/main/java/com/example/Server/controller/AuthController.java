@@ -47,7 +47,7 @@ public class AuthController {
 //    }
     
     // 로그인, 유저 토큰 발급
-    @PostMapping("/authenticate")
+    // 테스트용 주석
     public ResponseEntity<TokenDto> authorize(@RequestBody LoginDto loginDto) throws Exception {
         
     	UsernamePasswordAuthenticationToken authenticationToken =
