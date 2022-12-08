@@ -69,7 +69,6 @@
 			username, 
 			password,  
 			nickname,  
-			snsLoginType,  
 			createDate 
 		)
 		VALUES
@@ -77,7 +76,6 @@
 			#{username},
 			#{password},
 			#{nickname},
-			#{snsLoginType},
             date_format(now(),'%Y-%m-%d %H:%i:%s')
 		)
     </insert>
