@@ -38,17 +38,18 @@ public class AuthController {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final UserService userService;
 	private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
-//fdfdf
-    
+
 //    private void addTokenToCookie(HttpServletResponse response, String token) {
 //        Cookie tokenCookie = new Cookie(JwtFilter.TOKEN_COOKIE_NAME, token);
 //        tokenCookie.setMaxAge(86400);
 //        response.addCookie(tokenCookie);
 //    }
     
+// 테스트용 ddd
+// ㅇㄴㅁㅁㄹ
+
     // 로그인, 유저 토큰 발급ㄹㅇㄴㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㅍㅊㅊㅍㅊ
     // 테스트용 주석 inyoung111111
-    // 테스트 업데이트
     public ResponseEntity<TokenDto> authorize(@RequestBody LoginDto loginDto) throws Exception {
         
     	UsernamePasswordAuthenticationToken authenticationToken =
