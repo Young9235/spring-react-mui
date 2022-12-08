@@ -38,7 +38,7 @@ public class BookController {
 	private final Logger logger = LoggerFactory.getLogger(TokenProvider.class);
 	
 	// security 라이브러리(CORS정책) => 필터를 만들어야함 => 시큐리티가 CORS를 해제해줘야함
-	// 모두 가져오기
+	// 모두 가져오기 dsdsddsdsd
 	@GetMapping("/listLength")	
 	public ResponseEntity<Integer> getBookListCnt() throws Exception {	//ResponseEntity : http status 코드도 같이 리턴 할 수 있다.
 		HashMap<String, Object> map = new HashMap<>();
