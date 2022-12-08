@@ -47,8 +47,7 @@ public class AuthController {
 //    }
     
     // 로그인, 유저 토큰 발급
-    //테스용 주석222222222222222
-    // 테스트용 주석
+    // 테스트용 주석 inyoung111111
     public ResponseEntity<TokenDto> authorize(@RequestBody LoginDto loginDto) throws Exception {
         
     	UsernamePasswordAuthenticationToken authenticationToken =
