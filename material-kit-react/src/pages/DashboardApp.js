@@ -30,7 +30,7 @@ export default function DashboardApp() {
 
   useEffect(() => {
     setProgress(true);
-    instance.get('/home/userInfo').then((response) => {
+    instance.get('/user/userInfo').then((response) => {
       console.log('==== test 통신 ===== ', response);
       setData(response.data);
       setProgress(false);

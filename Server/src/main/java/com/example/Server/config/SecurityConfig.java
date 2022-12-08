@@ -66,7 +66,7 @@ public class SecurityConfig {
 						//.access("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")	// 특정 권한 사용자에게만 열어줌
 						.permitAll()
 						.antMatchers("/book/**").authenticated()
-						.antMatchers("/home/**").authenticated()
+						.antMatchers("/home/**").permitAll()
 						.antMatchers("/user/**")
 						.access("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
 						.anyRequest().permitAll())	// 인증 요청 구문 설정해준 URL 이외의 것은 허용하지 않겠다.

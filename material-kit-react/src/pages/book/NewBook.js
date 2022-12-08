@@ -50,8 +50,10 @@ const Item = styled(Card)(({ theme }) => ({
 export default function NewBook() {
   const [ststusError, setStstusError] = useState(false);
   const [progress, setProgress] = useState(false);
-  const [price, setPrice] = useState('');
   const [inStockYn, setInStockYn] = useState(false);
+  const [fileData, setFileData] = useState([]);
+  const [dayData, setDayData] = useState([]);
+
   const selectBoxData = [
     { id: 'CD-0000', value: 'CHO', label: '소설/문학' },
     { id: 'CD-0001', value: 'STR', label: '잡지/시사/이슈' },
@@ -70,14 +72,32 @@ export default function NewBook() {
     category: Yup.string().required('카테고리는 필수 값입니다.'),
   });
 
-  const fileData = [];
   // 파일 업로드시 값 셋팅
+  // const arrData = [];
+  const fileMemo = useMemo(() => {
+    return [];
+  }, []);
+
   const handleChangeStatus = ({ meta }, status) => {
     console.log(status, meta);
     if (status === 'done') {
-      fileData.push(meta);
+      fileMemo.push(meta);
+      // console.log(fileMemo);
+    }
+    if (status === 'removed') {
+      const delData = meta.id; // 삭제 된 id
+      // object 배열 요소에서 id값에 따른 인덱스 리턴
+      const idx = fileMemo.findIndex((item) => {
+        return item.id === delData;
+      });
+      fileMemo.splice(idx, 1);
+      console.log(fileMemo);
     }
   };
+
+  useEffect(() => {
+    setFileData(fileMemo);
+  }, [fileMemo]);
 
   const defaultValues = {
     bookNm: '',
@@ -89,6 +109,7 @@ export default function NewBook() {
     inStockCnt: 0,
     price: '',
     category: '',
+    uploadFile: '',
   };
 
   const methods = useForm({
@@ -101,12 +122,24 @@ export default function NewBook() {
     watch,
     setValue,
     control,
+    register,
     formState: { errors },
   } = methods;
 
+  // 폼 전송
   const onSubmit = async (data) => {
+    data.fileData = fileData;
+    data.publicDate = dayData;
     console.log(data);
   };
+
+  // 날짜 format 셋팅
+  const date = watch('publicDate');
+  useEffect(() => {
+    const formatDate = dayjs(date).format('YYYY-MM-DD');
+    console.log(formatDate);
+    setDayData(formatDate);
+  }, [date]);
 
   // 재고 유무 스위치
   const inStockSwitch = watch('inStockYn');
@@ -139,12 +172,6 @@ export default function NewBook() {
       setValue('price', '');
     }
   }, [priceVal, setValue]);
-
-  const date = watch('publicDate');
-  useEffect(() => {
-    const value = dayjs(date).format('YYYY-MM-DD');
-    console.log(value);
-  }, [date]);
 
   return (
     <Page title="User">
@@ -191,8 +218,11 @@ export default function NewBook() {
                 <Dropzone
                   onChangeStatus={handleChangeStatus}
                   accept="image/*"
+                  type="file"
+                  multiple="multiple"
                   styles={{ dropzone: { minHeight: 200, maxHeight: 350 } }}
                 />
+                <input {...register('uploadFile')} type="file" multiple="multiple" />
               </Item>
             </Grid>
             <Grid item xs={12} md={4}>

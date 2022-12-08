@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.Server.dao.BookMapper;
+import com.example.Server.dao.SeqMapper;
 import com.example.Server.model.Book;
 import com.example.Server.service.BookService;
 
@@ -18,6 +19,8 @@ import lombok.RequiredArgsConstructor;
 public class BookServiceImpl implements BookService {
 	
 	private final BookMapper bookMapper;
+	private final SeqMapper seqMapper;
+	private final String seqId = "BOOK_ID";
 	
 	@Transactional(readOnly = true)	
 	public int getBookListCnt(HashMap<String, Object> map) throws Exception {
@@ -44,6 +47,11 @@ public class BookServiceImpl implements BookService {
 	
 	@Transactional
 	public int insertBook(HashMap<String, Object> map) throws Exception {
+		
+		String bookId = seqMapper.getSequenceInfo(seqId);
+		seqMapper.updateSequenceInfo(seqId);
+		map.put("bookId", bookId);
+		
 		int suc = bookMapper.insertBook(map);
 		if(suc <= 0) 
 			throw new IllegalArgumentException("데이터베이스에 저장되지 않았습니다.");

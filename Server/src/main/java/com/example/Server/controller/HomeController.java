@@ -29,23 +29,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class HomeController {
 	private final UserService userService;
-	private final BookService bookService;
 	
 	@GetMapping("/hello")
 	public ResponseEntity<String> getUserList() throws Exception {	
 		return ResponseEntity.ok("hello");
 	}
 	
-	// JWT 토큰에서 인증 정보 조회
- 	@GetMapping("/userInfo")
-    public ResponseEntity<UserVo> getAuthentication(HttpServletRequest request) throws Exception {
- 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
- 		String username = authentication.getName();
- 		UserVo user = userService.findByUsername(username);
- 		
-        return new ResponseEntity<>(user, HttpStatus.OK);
-    }
- 	
  	@GetMapping("/logout")
     public ResponseEntity<TokenDto> logout(HttpServletRequest request) throws Exception {
         String jwt = "invalid_token";

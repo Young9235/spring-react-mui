@@ -17,20 +17,36 @@
 	<insert id="insertBook" parameterType="Map">
 		INSERT INTO tb_book_info 
 		(
-			title, 
-			description, 
-			price
+			bookId, 	
+			productCode,
+			title, 		
+			author, 	
+			publicDate, 
+			description,
+			inStockYn, 	
+			inStockCnt, 
+			category, 	
+			price, 		
+			tagId 		
 		)
 		VALUES 
 		(
-			#{title},
+			#{bookId}, 	
+			#{productCode},
+			#{title}, 		
+			#{author}, 	
+			#{publicDate}, 
 			#{description},
-			#{price}
+			#{inStockYn}, 	
+			#{inStockCnt}, 
+			#{category}, 	
+			#{price}, 		
+			#{tagId}
 		)
 	</insert>
 	
 	<select id="getBookInfo" parameterType="Map" resultType="com.example.Server.model.Book">
-  		SELECT * FROM tb_book_info where idx = #{idx}
+  		SELECT * FROM tb_book_info where bookId = #{bookId}
   	</select>
   	
   	<update id="updateBook" parameterType="Map">
@@ -39,13 +55,13 @@
 			A.description = #{description}, 
 			A.price = #{price}
 		WHERE
-			A.idx = #{idx}
+			A.bookId = #{bookId}
 	</update>
 	
 	<delete id="deleteBook" parameterType="Map">
 		DELETE FROM tb_book_info AS A
 		WHERE
-			A.idx = #{idx}
+			A.bookId = #{bookId}
 	</delete>
 	
 

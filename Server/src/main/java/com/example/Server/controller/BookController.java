@@ -3,6 +3,7 @@ package com.example.Server.controller;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -23,6 +24,8 @@ import com.example.Server.model.Book;
 import com.example.Server.model.SearchParams;
 import com.example.Server.model.UserVo;
 import com.example.Server.service.BookService;
+import com.example.Server.util.Constants;
+import com.example.Server.util.FileUtil;
 
 import lombok.RequiredArgsConstructor;
 
@@ -56,7 +59,7 @@ public class BookController {
 		
 		for(Book book : bookList) {			
 			JSONObject obj = new JSONObject();
-			obj.put("bookId", book.getIdx());
+			obj.put("bookId", book.getBookId());
 			obj.put("title", book.getTitle());
 			obj.put("author", book.getAuthor());
 			obj.put("category", book.getCategory());
@@ -74,19 +77,21 @@ public class BookController {
 		map.put("title", book.getTitle());
 		map.put("description", book.getDescription());
 		map.put("price", book.getPrice());
+
+		FileUtil.fileUpload(book.getFileData(), Constants.DOWN_LOAD_PATH, Constants.BOOK_SUB_FOLDER);
 		
 		return new ResponseEntity<>(bookService.insertBook(map), HttpStatus.CREATED);
 	}
 	
 	// 한건 가져오기
 	@GetMapping("/{id}")	//ResponseEntity : http status 코드도 같이 리턴 할 수 있다.
-	public ResponseEntity<?> getBookInfo(@PathVariable Long id) throws Exception {
+	public ResponseEntity<?> getBookInfo(@PathVariable String id) throws Exception {
 		HashMap<String, Object> map = new HashMap<>();
 		
 		if(id == null) {
 			throw new IllegalArgumentException("param In id not Exits ");
 		} else {
-			map.put("idx", id);
+			map.put("bookId", id);
 		}
 		
 		return new ResponseEntity<>(bookService.getBookInfo(map), HttpStatus.OK);
@@ -94,13 +99,13 @@ public class BookController {
 	
 	// 수정하기
 	@PutMapping("/{id}")	//ResponseEntity : http status 코드도 같이 리턴 할 수 있다.
-	public ResponseEntity<?> updateBook(@PathVariable Long id, @RequestBody Book book) throws Exception {
+	public ResponseEntity<?> updateBook(@PathVariable String id, @RequestBody Book book) throws Exception {
 		HashMap<String, Object> map = new HashMap<>();
 		
 		if(id == null) {
 			throw new IllegalArgumentException("param In id not Exits ");
 		} else {
-			map.put("idx", id);
+			map.put("bookId", id);
 		}
 		
 		map.put("title", book.getTitle());
@@ -112,14 +117,14 @@ public class BookController {
 	
 	// 삭제하기
 	@DeleteMapping("/{id}")	//ResponseEntity : http status 코드도 같이 리턴 할 수 있다.
-	public ResponseEntity<?> deleteBook(@PathVariable /* url에서 각 구분자에 들어오는 값을 처리해야 할 때 사용 */ Long id, 
+	public ResponseEntity<?> deleteBook(@PathVariable /* url에서 각 구분자에 들어오는 값을 처리해야 할 때 사용 */ String id, 
 			@RequestBody Book book) throws Exception {
 		HashMap<String, Object> map = new HashMap<>();
 		
 		if(id == null) {
 			throw new IllegalArgumentException("param In id not Exits ");
 		} else {
-			map.put("idx", id);
+			map.put("bookId", id);
 		}
 		
 		return new ResponseEntity<>(bookService.deleteBook(map), HttpStatus.OK);

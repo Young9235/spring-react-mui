@@ -95,6 +95,7 @@ export default function Register() {
 
             <AuthSocial />
 
+            {/* 회원가입 폼 */}
             <RegisterForm />
 
             <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
