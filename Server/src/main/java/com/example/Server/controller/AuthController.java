@@ -46,7 +46,7 @@ public class AuthController {
 //        response.addCookie(tokenCookie);
 //    }
     
-    // 로그인, 유저 토큰 발급
+    // 로그인, 유저 토큰 발급ㄹㅇㄴㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹ
     // 테스트용 주석 inyoung111111
     public ResponseEntity<TokenDto> authorize(@RequestBody LoginDto loginDto) throws Exception {
         
