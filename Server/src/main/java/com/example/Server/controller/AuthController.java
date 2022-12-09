@@ -14,7 +14,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,13 +38,6 @@ public class AuthController {
     private final UserService userService;
 	private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
-    
-//    private void addTokenToCookie(HttpServletResponse response, String token) {
-//        Cookie tokenCookie = new Cookie(JwtFilter.TOKEN_COOKIE_NAME, token);
-//        tokenCookie.setMaxAge(86400);
-//        response.addCookie(tokenCookie);
-//    }
-    
     // 로그인, 유저 토큰 발급
     // 테스트용 주석
     @PostMapping("/authenticate")
