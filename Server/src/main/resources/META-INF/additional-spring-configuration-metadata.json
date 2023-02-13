@@ -33,5 +33,95 @@
     "name": "jwt.access.expiration.in.seconds",
     "type": "java.lang.String",
     "description": "A description for 'jwt.access.expiration.in.seconds'"
+  },
+  {
+    "name": "spring.datasource.ori.password",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.ori.password'"
+  },
+  {
+    "name": "spring.datasource.ori.username",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.ori.username'"
+  },
+  {
+    "name": "spring.datasource.ori.url",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.ori.url'"
+  },
+  {
+    "name": "spring.datasource.ori.driver-class-name",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.ori.driver-class-name'"
+  },
+  {
+    "name": "spring.datasource.cms.driver-class-name",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.cms.driver-class-name'"
+  },
+  {
+    "name": "spring.datasource.cms.url",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.cms.url'"
+  },
+  {
+    "name": "spring.datasource.cms.username",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.cms.username'"
+  },
+  {
+    "name": "spring.datasource.cms.password",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.cms.password'"
+  },
+  {
+    "name": "spring.ori.datasource.driver-class-name",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.ori.datasource.driver-class-name'"
+  },
+  {
+    "name": "spring.ori.datasource.url",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.ori.datasource.url'"
+  },
+  {
+    "name": "spring.ori.datasource.username",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.ori.datasource.username'"
+  },
+  {
+    "name": "spring.ori.datasource.password",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.ori.datasource.password'"
+  },
+  {
+    "name": "spring.cms.datasource.driver-class-name",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.cms.datasource.driver-class-name'"
+  },
+  {
+    "name": "spring.cms.datasource.url",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.cms.datasource.url'"
+  },
+  {
+    "name": "spring.cms.datasource.username",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.cms.datasource.username'"
+  },
+  {
+    "name": "spring.cms.datasource.password",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.cms.datasource.password'"
+  },
+  {
+    "name": "spring.ori.datasource.jdbc-url",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.ori.datasource.jdbc-url'"
+  },
+  {
+    "name": "spring.cms.datasource.jdbc-url",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.cms.datasource.jdbc-url'"
   }
 ]}
